@@ -1,0 +1,71 @@
+<div class="row" style="width: 500px; height: auto; margin-left: 200px;margin-top:50px;">
+  <div class="col-xs-12">
+    <button type="button" class="btn btn-primary" (click)="onCreateUser()">Create User</button>
+    <div *ngIf="showForm">
+    <form  #formRef="ngForm">
+        <div class="form-group">
+          <label for="fullName">Full Name</label>
+          <input type="text" name="fullName" class="form-control" id="fullName" [(ngModel)]="userName">
+        </div>
+        <div class="form-group">
+            <label for="age">Age</label>
+            <input type="number" name="age" class="form-control" id="age" [(ngModel)]="userAge">
+        </div>
+
+       <div class="form-group">
+           <label for="company">Company</label>
+           <input type="text" name="company" class="form-control" id="company" [(ngModel)]="userCompany">
+        </div>  
+     <button type="button" class="btn btn-primary" (click)="onSubmit(formRef)" >
+       <span *ngIf="!updatedForm">Submit</span>
+       <span *ngIf="updatedForm">Update</span>
+     </button>
+     <!--<button type="button" style="margin-left: 10px;" class="btn btn-warning" (click)="onDelete()">Delete</button>-->
+     <button type="button" style="margin-left: 10px;" class="btn btn-danger" (click)="onClose()">Close</button>
+     
+    </form>
+    <br>
+    <br>
+    </div>
+  </div>
+  <br>
+
+ <hr>
+  <h4>**********User List*************</h4>
+<table class="table">
+    <thead class="thead-light">
+        <tr>
+            
+            <th>Name</th>
+            <th>Age</th>
+            <th>Company</th>
+            <th>Actions </th>
+        </tr>
+    </thead>
+    <tbody >
+        <tr *ngFor="let user of users;let i=index"  style="cursor : pointer;" class="table-primary">
+               
+                 <td>{{user.fullName}} </td>
+                  <td>{{user.age}}</td>
+                   <td>{{user.company}} </td>
+                   <td >
+                       <button class="btn btn-primary" (click)="onUpdate(i)" >Edit</button>
+                       <button class="btn btn-danger" (click)="onDelete(i)" style="margin-left: 10px;">Delete</button>
+                   </td>
+                  
+               </tr>
+                  
+    </tbody>
+</table>
+
+  <!--<div class="list-group">
+  <div *ngFor="let user of users" (click)="a()" >
+  <a><li  class="list-group-item-success" style="text-decoration-style: none;list-style-type: none;">
+   Name : 
+   Age : {{user.age}} 
+   company : {{user.company}}
+   </li></a>
+  <br>
+  </div>
+</div>-->
+</div>

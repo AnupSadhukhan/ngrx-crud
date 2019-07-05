@@ -5,6 +5,7 @@ import {userModel} from '../../model/user.model';
 import {UserService} from '../../services/user.service';
 import { UserState } from 'src/app/store/reducers/user.reducer';
 import * as fromUserActions from '../../store/actions/user.actions';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-user',
@@ -13,7 +14,7 @@ import * as fromUserActions from '../../store/actions/user.actions';
 })
 export class UserComponent implements OnInit {
   showForm : boolean =false;
-  users : userModel[];
+  users$ : Observable<userModel[]>;
   userAge : number;
   userName : String;
   userCompany : string;
@@ -21,11 +22,14 @@ export class UserComponent implements OnInit {
   updatedIndex : number =-1;
  
   constructor(private userService : UserService,
-    private store: Store<UserState>) { }
+    private store: Store<UserState>) { 
+      this.users$ =this.store.select('users');
+    }
 
   ngOnInit() {
     this.showForm=false;
     //this.users = this.userService.getUsers();
+     this.store.dispatch(new fromUserActions.GetUsers())
    
 
   }
@@ -71,7 +75,7 @@ export class UserComponent implements OnInit {
     this.showForm =true;
     this.updateForm =true;
     this.updatedIndex=i;
-    const user: userModel =this.users[i];
+    const user: userModel =this.users$[i];
    this.userName = user.fullName;
    this.userAge = user.age;
    this.userCompany = user.company;

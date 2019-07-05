@@ -38,7 +38,7 @@ export class GetUsersFail implements Action{
 }
 export class GetUsersSuccess implements Action{
     readonly type= UserActions.GET_USERS_SUCCESS;
-    constructor(public payload : userModel){}
+    constructor(public payload : userModel[]){}
     
 }
 

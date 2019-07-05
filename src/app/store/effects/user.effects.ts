@@ -5,6 +5,7 @@ import { Observable, of, pipe, from } from 'rxjs';
 import { Action } from '@ngrx/store';
 import {switchMap,map,mergeMap, catchError} from 'rxjs/operators';
 import { UserService } from 'src/app/services/user.service';
+import { userModel } from 'src/app/model/user.model';
 
 @Injectable({
     providedIn : "root"
@@ -24,24 +25,7 @@ export class UserEffects{
                    console.log("working in effects!!")
                    return this.userService.createUser(user)
                    .pipe(
-                    //    mergeMap(
-                        
-                    //     (response) => {
-                    //                   user.id=response.name;
-                    //                   console.log("updating..."+user.id)
-                    //                   console.log(user);
-                    //                  return this.userService.updateUser(user.id,user).pipe(
-                    //                     map(
-                    //                         (response) => {console.log("updated");
-                    //                         console.log(response)
-                    //                     }
-                    //                     ),
-                    //                      catchError(() => of(new fromUserActions.UserAddFail()))
-                    //                  )
-                                   
-                                   
-                    //               }
-                    //    ),
+                    
                     switchMap(
                         (response) => { 
                             user.id=response.name;
@@ -65,28 +49,34 @@ export class UserEffects{
                      ),
                      catchError(() => of(new fromUserActions.UserAddFail("creation failed")))
                    );
-                //    .pipe(
-                //     map( 
-                //       (response) => {
-                //           user.id=response.name;
-                //          this.userService.updateUser(user.id,user)
-                       
-                //       }
                 
-                //     ),
-                //     catchError(() => of(new fromUserActions.UserAddFail()))
-                           
-
-                //   )
                    
                    
                }
             )
         )
     )
-    // getUsers$ : Observable<Action> = this.actions$.pipe(
-    //     ofType(fromUserActions)
-    // )
+
+    @Effect()
+    getUsers$ : Observable<Action> = this.actions$.pipe(
+        ofType<fromUserActions.GetUsers>(fromUserActions.UserActions.GET_USERS),
+        pipe(
+           switchMap(
+            () => {
+                return this.userService.getUsers().pipe(
+                    map(
+                        (users : userModel[] ) => {
+                            return new fromUserActions.GetUsersSuccess(users)
+                        }
+                    ),
+                    catchError(
+                        (error) => of(new fromUserActions.GetUsersFail(`Error occured at getusers ${error}`))
+                    )
+                )
+              }
+           )
+        )
+    )
     
 
 }

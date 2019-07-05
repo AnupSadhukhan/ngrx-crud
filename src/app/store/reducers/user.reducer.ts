@@ -5,11 +5,13 @@ export interface UserState{
     users: userModel[];
     loading : boolean;
     loaded : boolean;
+    errorMsg?: string;
 }
 export const initialUserState:UserState={
     users : [],
     loading : false,
-    loaded : false
+    loaded : false,
+    errorMsg : ''
 }
 export function userReducer(state = initialUserState, action : userAction.allUserActions) : UserState{
 
@@ -18,21 +20,62 @@ export function userReducer(state = initialUserState, action : userAction.allUse
             return {
                 ...state,
                 loading:true,
-                loaded : false
+                loaded : false,
+                errorMsg : ''
             }
         }
         case userAction.UserActions.USER_ADD_FAIL : {
-            return {...state}
+            return {
+                ...state,
+                loading : false,
+                loaded : false,
+                errorMsg : action.payload
+                }
         }
         case userAction.UserActions.USER_ADD_SUCCESS : {
 
             return {
                 ...state,
                 loading:false,
+                errorMsg : '',
                 loaded : true,
                 users : [...state.users,action.payload]
             }
         }
+        case userAction.UserActions.GET_USERS : {
+
+            
+                return {
+                    ...state,
+                    loading:true,
+                    loaded : false,
+                    errorMsg : ''
+                }
+            
+        }
+        case userAction.UserActions.GET_USERS_FAIL : {
+
+            
+            return {
+                ...state,
+                loading: false,
+                loaded : false,
+                errorMsg : action.payload
+            }
+        
+    }
+    case userAction.UserActions.GET_USERS_SUCCESS : {
+
+            
+        return {
+            ...state,
+            loading: false,
+            loaded : true,
+            errorMsg : '',
+            users : [...state.users,action.payload]
+        }
+    
+}
        
     }
     return state;

@@ -56,14 +56,14 @@ export class UserEffects{
                             ),
                             catchError( () => {
                                 this.userService.deleteUser(user.id).subscribe();
-                                return of(new fromUserActions.UserAddFail())
+                                return of(new fromUserActions.UserAddFail("updation of id failed"))
                                 
                                 }
                             )
                         )
                             }  
                      ),
-                     catchError(() => of(new fromUserActions.UserAddFail()))
+                     catchError(() => of(new fromUserActions.UserAddFail("creation failed")))
                    );
                 //    .pipe(
                 //     map( 

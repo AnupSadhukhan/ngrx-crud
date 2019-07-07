@@ -32,10 +32,7 @@ export class UserComponent implements OnInit {
     this.showForm=false;
     //this.users = this.userService.getUsers();
      this.store.dispatch(new fromUserActions.GetUsers())
-    //this.users$ = 
-    this.store.select(fromAppState.getUsers).subscribe(
-      (r) => { console.log(r)}
-    )
+    this.users$ = this.store.select(fromAppState.getUsers)
      
 
   }

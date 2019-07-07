@@ -33,7 +33,7 @@ export function userReducer(state = initialUserState, action : userAction.allUse
                 }
         }
         case userAction.UserActions.USER_ADD_SUCCESS : {
-
+            //const data= Object.values(action.payload);
             return {
                 ...state,
                 loading:false,
@@ -66,13 +66,14 @@ export function userReducer(state = initialUserState, action : userAction.allUse
     }
     case userAction.UserActions.GET_USERS_SUCCESS : {
 
-            
+        const data= Object.values(action.payload);
+        
         return {
             ...state,
             loading: false,
             loaded : true,
             errorMsg : '',
-            users : [...state.users,...action.payload]
+            users : [...state.users,...data]
         }
     
 }

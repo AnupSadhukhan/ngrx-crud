@@ -12,7 +12,7 @@ export class UserService {
   
   createUser(user : userModel){
       console.log("working in service ")
-      return  this.httpClient.post<{name : string}>("https://ngrx-crud1.firebaseio.com/users.json",user
+      return  this.httpClient.post<{name : string}>("https://ngrx-crud.firebaseio.com/users.json",user
  
   );
   
@@ -23,6 +23,7 @@ export class UserService {
   }
   
   updateUser(id: string,user : userModel){
+     
       return this.httpClient.put<userModel>(`https://ngrx-crud.firebaseio.com/users/${id}.json`,user);
   }
   deleteUser(id : string){

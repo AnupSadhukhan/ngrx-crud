@@ -1,5 +1,6 @@
 import *  as userAction from '../actions/user.actions';
 import { userModel } from 'src/app/model/user.model';
+import { act } from '@ngrx/effects';
 
 export interface UserState{
     users: userModel[];
@@ -65,7 +66,18 @@ export function userReducer(state = initialUserState, action : userAction.allUse
         
     }
     case userAction.UserActions.GET_USERS_SUCCESS : {
+        if(action.payload == null || action.payload ==undefined){
+            return {
+                ...state,
+                loading: false,
+                loaded : true,
+                errorMsg : '',
+                users : [...state.users]
+            }
+        }
+        else{
 
+        
         const data= Object.values(action.payload);
         
         return {
@@ -75,7 +87,7 @@ export function userReducer(state = initialUserState, action : userAction.allUse
             errorMsg : '',
             users : [...state.users,...data]
         }
-    
+        }
 }
        
     }

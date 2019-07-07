@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
+import { Observable } from 'rxjs';
 
+import * as fromUserActions from '../../store/actions/user.actions';
 import {userModel} from '../../model/user.model';
 import {UserService} from '../../services/user.service';
 import { UserState } from 'src/app/store/reducers/user.reducer';
-import * as fromUserActions from '../../store/actions/user.actions';
-import { Observable } from 'rxjs';
+import * as fromAppState from '../../store/state/AppState';
+
 
 @Component({
   selector: 'app-user',
@@ -23,14 +25,18 @@ export class UserComponent implements OnInit {
  
   constructor(private userService : UserService,
     private store: Store<UserState>) { 
-      this.users$ =this.store.select('users');
+     
     }
 
   ngOnInit() {
     this.showForm=false;
     //this.users = this.userService.getUsers();
      this.store.dispatch(new fromUserActions.GetUsers())
-   
+    //this.users$ = 
+    this.store.select(fromAppState.getUsers).subscribe(
+      (r) => { console.log(r)}
+    )
+     
 
   }
   onCreateUser(){

@@ -80,3 +80,9 @@ export function userReducer(state = initialUserState, action : userAction.allUse
     }
     return state;
 }
+
+
+export const getUsers = (userState : UserState) => userState.users;
+export const getLoading =  (userState : UserState) => userState.loading;
+export const getLoaded =  (userState : UserState) => userState.loaded;
+export const getErrorMsg =  (userState : UserState) => userState.errorMsg;

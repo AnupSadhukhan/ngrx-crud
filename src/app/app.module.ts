@@ -15,6 +15,7 @@ import { userReducer } from './store/reducers/user.reducer';
 import { AppReducers } from './store/state/AppState';
 import { EffectsModule } from '@ngrx/effects';
 import { UserEffects } from './store/effects/user.effects';
+import { UserModule } from './component/user/user.module';
 
 
 @NgModule({
@@ -29,9 +30,10 @@ import { UserEffects } from './store/effects/user.effects';
     ReactiveFormsModule,
    // FlexLayoutModule,
     HttpClientModule,
-    StoreModule.forRoot(AppReducers),
-    StoreDevtoolsModule.instrument({}),
-    EffectsModule.forRoot([UserEffects])
+    UserModule,
+     StoreModule.forRoot({}),
+     StoreDevtoolsModule.instrument({}),
+    // EffectsModule.forRoot([UserEffects])
     
   ],
 

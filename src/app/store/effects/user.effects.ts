@@ -70,7 +70,45 @@ export class UserEffects{
                         }
                     ),
                     catchError(
-                        (error) => of(new fromUserActions.GetUsersFail(`Error occured at getusers ${error}`))
+                        (error) => {
+                            alert(error.error.error)
+                           return of(new fromUserActions.GetUsersFail(`Error occured at getusers ${error.error.error}`))
+                        }
+                    )
+                )
+              }
+           )
+        )
+    )
+    @Effect()
+    deleteUser$ : Observable<Action> = this.actions$.pipe(
+        ofType<fromUserActions.DeleteUser>(fromUserActions.UserActions.DELETE_USER),
+        pipe(
+            
+           switchMap(
+            (action) => {
+                return this.userService.deleteUser(action.payload).pipe(
+                    switchMap(
+                        ( ) => {
+                            return this.userService.getUsers().pipe(
+                              map(
+                                  (users : userModel[]) => {
+                                    return new fromUserActions.GetUsersSuccess(users)
+                                  }
+                              ),
+                              catchError(
+                                  (error) => of(new fromUserActions.GetUsersFail("failed to fetch users"))
+                              )
+                         
+                            )
+                            
+                        }
+                    ),
+                    catchError(
+                        (error) => {
+                            alert(error.error.error)
+                           return of(new fromUserActions.DeleteUserFail(`Error occured at Delete user ${error.error.error}`))
+                        }
                     )
                 )
               }

@@ -22,7 +22,7 @@ export class UserComponent implements OnInit {
   userCompany : string;
   updateForm : boolean =false;
   updatedIndex : number =-1;
- 
+  errorMsg$ : Observable<string>;
   constructor(private userService : UserService,
     private store: Store<UserState>) { 
      
@@ -32,7 +32,8 @@ export class UserComponent implements OnInit {
     this.showForm=false;
     //this.users = this.userService.getUsers();
      this.store.dispatch(new fromUserActions.GetUsers())
-    this.users$ = this.store.select(fromAppState.getUsers)
+    this.users$ = this.store.select(fromAppState.getUsers);
+    this.errorMsg$ = this.store.select(fromAppState.getErrorMsg);
      
 
   }
@@ -87,10 +88,11 @@ export class UserComponent implements OnInit {
     console.log("going to update"+ i)
     console.log(this.updateForm)
   }
-  onDelete(i : number){
+  onDelete(i : string){
     console.log("will delete.. "+i)
-  
-    // this.userService.deleteUser(i);
+    
+     this.store.dispatch(new fromUserActions.DeleteUser(i))
+
     this.clearData();
      this.loadUsers();
     

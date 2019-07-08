@@ -72,7 +72,7 @@ export function userReducer(state = initialUserState, action : userAction.allUse
                 loading: false,
                 loaded : true,
                 errorMsg : '',
-                users : [...state.users]
+                users : []
             }
         }
         else{
@@ -85,7 +85,7 @@ export function userReducer(state = initialUserState, action : userAction.allUse
             loading: false,
             loaded : true,
             errorMsg : '',
-            users : [...state.users,...data]
+            users : [...data]
         }
         }
 }

@@ -32,6 +32,9 @@
 
  <hr>
   <h4>**********User List*************</h4>
+  <div *ngIf="(errorMsg$ | async) != ''" >
+    There is some error : {{errorMsg$ | async}}
+  </div>
 <table class="table">
     <thead class="thead-light">
         <tr>
@@ -49,8 +52,8 @@
                   <td>{{user.age}}</td>
                    <td>{{user.company}} </td>
                    <td >
-                       <button class="btn btn-primary" (click)="onUpdate(i)" >Edit</button>
-                       <button class="btn btn-danger" (click)="onDelete(i)" style="margin-left: 10px;">Delete</button>
+                       <button class="btn btn-primary" (click)="onUpdate(user.id)" >Edit</button>
+                       <button class="btn btn-danger" (click)="onDelete(user.id)" style="margin-left: 10px;">Delete</button>
                    </td>
                   
                </tr>

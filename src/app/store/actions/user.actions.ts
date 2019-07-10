@@ -14,6 +14,9 @@ export const enum UserActions{
     DELETE_USER = '[USER] DELETE_USER',
     DELETE_USER_FAIL = '[USER] DELETE_USER_FAIL',
     DELETE_USER_SUCCESS = '[USER] DELETE_USER_SUCCESS',
+    UPDATE_USER = '[USER] UPDATE_USER',
+    UPDATE_USER_SUCCESS = '[USER] UPDATE_USER_SUCCESS',
+    UPDATE_USER_FAIL = '[USER] UPDATE_USER_FAIL'
 
 }
 //export const USER_ADD='[USER] USER ADD';
@@ -62,8 +65,24 @@ export class DeleteUserSuccess implements Action{
     readonly type=UserActions.DELETE_USER_SUCCESS;
 
 }
+export class UpdateUser implements Action{
+    readonly type=UserActions.UPDATE_USER;
+    constructor(public payload:userModel){}
+}
+
+export class UpdateUserSuccess implements Action{
+    readonly type=UserActions.UPDATE_USER_SUCCESS;
+    constructor(public payload: userModel){}
+
+}
+
+export class UpdateUserFail implements Action{
+    readonly type = UserActions.UPDATE_USER_FAIL;
+    constructor(public payload: string){}
+}
 
 export type allUserActions= UserAdd | UserAddSuccess | UserAddFail
 
                             | GetUsers | GetUsersFail | GetUsersSuccess
-                            | DeleteUser | DeleteUserFail | DeleteUserSuccess;
+                            | DeleteUser | DeleteUserFail | DeleteUserSuccess
+                            | UpdateUser | UpdateUserFail | UpdateUserSuccess ;

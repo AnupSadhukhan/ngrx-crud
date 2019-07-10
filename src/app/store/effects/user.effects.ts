@@ -47,7 +47,9 @@ export class UserEffects{
                         )
                             }  
                      ),
-                     catchError(() => of(new fromUserActions.UserAddFail("creation failed")))
+                     catchError((error) => of(new fromUserActions.UserAddFail("creation failed "+error.error.error)))
+
+                     
                    );
                 
                    
@@ -97,8 +99,11 @@ export class UserEffects{
                                   }
                               ),
                               catchError(
-                                  (error) => of(new fromUserActions.GetUsersFail("failed to fetch users"))
-                              )
+                                  (error) => {
+                                      alert(error.error.error)
+                                     return of(new fromUserActions.GetUsersFail("failed to fetch users"))
+                                  }
+                             )
                          
                             )
                             
@@ -113,6 +118,34 @@ export class UserEffects{
                 )
               }
            )
+        )
+    );
+    @Effect()
+    updateUser$ : Observable<Action> = this.actions$.pipe(
+        ofType<fromUserActions.UpdateUser>(fromUserActions.UserActions.UPDATE_USER),
+        pipe(
+            switchMap(
+                (action ) => {
+                    return this.userService.updateUser(action.payload.id,action.payload)
+                    .pipe(
+                        map(
+                            (user : userModel) => new fromUserActions.UpdateUserSuccess(user)
+                        ),
+                        catchError(
+                            (error) => {
+                                alert(error.error.error)
+                               return of(new fromUserActions.UpdateUserFail(error.error.error))
+                            }
+                        )
+                    )
+                }
+            ),
+            catchError(
+                 (error) => {
+                     alert(error.error.error)
+                    return of(new fromUserActions.UpdateUserFail(error.error.error))
+                 }
+            )
         )
     )
     

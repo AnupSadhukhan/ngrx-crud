@@ -88,7 +88,43 @@ export function userReducer(state = initialUserState, action : userAction.allUse
             users : [...data]
         }
         }
-}
+    }
+    case userAction.UserActions.UPDATE_USER : {
+        return {
+            ...state,
+            loading : true,
+            loaded : false,
+            errorMsg : ''
+        }
+    }
+    case userAction.UserActions.UPDATE_USER_SUCCESS : {
+        const updatedUsers : userModel[]=state.users.map(
+            (user) => {
+                if(user.id===action.payload.id){
+                    return action.payload;
+                }
+                else{
+                    return user;
+                }
+            }
+        )
+        return{
+            ...state,
+            loaded : true,
+            loading : false,
+            users : [...updatedUsers],
+            
+        }
+    }
+    case userAction.UserActions.UPDATE_USER_FAIL : {
+        return {
+            ...state,
+            loaded : false,
+            loading : false,
+            errorMsg : action.payload
+        }
+    }
+   
        
     }
     return state;

@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "staging": "ngrx-crud",
+    "default": "ngrx-crud"
+  }
+}
